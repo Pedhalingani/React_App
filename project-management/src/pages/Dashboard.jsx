@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaTasks, FaUsers, FaProjectDiagram, FaPlus } from "react-icons/fa";
+import { ProjectContext } from "../context/ProjectContext";
 
 export default function Dashboard() {
+  const { projects } = useContext(ProjectContext);
+
   return (
     <Container className="mt-5">
       <h2 className="text-center text-primary mb-4">Dashboard</h2>
@@ -12,14 +15,14 @@ export default function Dashboard() {
           <Card className="shadow-sm text-center p-3">
             <FaProjectDiagram size={40} className="text-success" />
             <h4 className="mt-3">Total Projects</h4>
-            <p className="fs-4 fw-bold">12</p>
+            <p className="fs-4 fw-bold">{projects.length}</p>
           </Card>
         </Col>
         <Col md={4}>
           <Card className="shadow-sm text-center p-3">
             <FaTasks size={40} className="text-warning" />
             <h4 className="mt-3">Total Tasks</h4>
-            <p className="fs-4 fw-bold">45</p>
+            <p className="fs-4 fw-bold"> {/* Get this from state when backend is connected */} 45 </p>
           </Card>
         </Col>
         <Col md={4}>

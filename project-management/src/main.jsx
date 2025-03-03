@@ -12,6 +12,7 @@ import Teams from "./pages/Teams";
 import { ProjectContext } from "./context/ProjectContext";
 import Login from "./pages/Login";
 import FileUpload from "./components/FileUpload";
+import Logout from "./pages/Logout";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -25,8 +26,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Login/>
     <ProjectContext/>
     <FileUpload/>
+    <Logout/>
 
 
   </BrowserRouter>
 );
-

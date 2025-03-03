@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
-import { Button, Alert } from "react-bootstrap";
+import { Button, Alert, ProgressBar } from "react-bootstrap";
 
 const FileUpload = ({ projectId }) => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*,application/pdf",
@@ -14,16 +16,25 @@ const FileUpload = ({ projectId }) => {
 
   const handleUpload = async () => {
     if (!file) return setError("Please select a file");
+    setError("");
+    setUploading(true);
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("projectId", projectId);
 
     try {
-      await axios.post(" http://localhost:5173//api/upload", formData);
+      await axios.post("http://localhost:5000/api/upload", formData, {
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percent);
+        },
+      });
       alert("File uploaded successfully");
     } catch (err) {
       setError("Failed to upload file");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -35,7 +46,10 @@ const FileUpload = ({ projectId }) => {
         <p>Drag & drop a file here, or click to select one</p>
       </div>
       {file && <p>Selected File: {file.name}</p>}
-      <Button className="mt-2" onClick={handleUpload}>Upload</Button>
+      {uploading && <ProgressBar animated now={progress} label={`${progress}%`} />}
+      <Button className="mt-2" onClick={handleUpload} disabled={uploading}>
+        {uploading ? "Uploading..." : "Upload"}
+      </Button>
     </div>
   );
 };
