@@ -1,52 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { Container, Card, Button, Spinner, Alert, Row, Col } from "react-bootstrap";
-import axios from "axios";
+import React, { useState } from "react";
+import "../styles/Tasks.css"; // Ensure CSS file is linked
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [tasks, setTasks] = useState([
+    { id: 1, title: "Design Homepage", status: "In Progress" },
+    { id: 2, title: "Write API Documentation", status: "Completed" },
+    { id: 3, title: "Fix Login Bug", status: "Pending" },
+  ]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/tasks");
-        setTasks(res.data);
-      } catch (err) {
-        setError("Failed to load tasks");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTasks();
-  }, []);
+  const addTask = () => {
+    const newTask = { id: tasks.length + 1, title: "New Task", status: "Pending" };
+    setTasks([...tasks, newTask]);
+  };
 
   return (
-    <Container>
-      <div className="d-flex justify-content-between align-items-center my-4">
-        <h2>Tasks</h2>
-        <Button variant="primary">+ Add Task</Button>
-      </div>
+    <div className="tasks-container">
+      <h1 className="tasks-title">Tasks</h1>
 
-      {loading && <Spinner animation="border" />}
-      {error && <Alert variant="danger">{error}</Alert>}
+      <button className="add-task-btn" onClick={addTask}>
+        + Add Task
+      </button>
 
-      <Row>
+      <div className="tasks-list">
         {tasks.map((task) => (
-          <Col key={task._id} md={4} className="mb-4">
-            <Card className="shadow-sm">
-              <Card.Body>
-                <Card.Title>{task.title}</Card.Title>
-                <Card.Text>{task.description}</Card.Text>
-                <p><strong>Status:</strong> {task.status}</p>
-                <p><strong>Due:</strong> {new Date(task.dueDate).toDateString()}</p>
-                <Button variant="info">View Details</Button>
-              </Card.Body>
-            </Card>
-          </Col>
+          <div key={task.id} className="task-card">
+            <h3>{task.title}</h3>
+            <p>Status: <span className={`status ${task.status.toLowerCase()}`}>{task.status}</span></p>
+          </div>
         ))}
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 }

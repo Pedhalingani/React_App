@@ -1,49 +1,36 @@
-import React, { useContext } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FaTasks, FaUsers, FaProjectDiagram, FaPlus } from "react-icons/fa";
-import { ProjectContext } from "../context/ProjectContext";
+import React from "react";
+import "../styles/Dashboard.css"; // Ensure CSS is linked
 
 export default function Dashboard() {
-  const { projects } = useContext(ProjectContext);
-
   return (
-    <Container className="mt-5">
-      <h2 className="text-center text-primary mb-4">Dashboard</h2>
-      
-      <Row>
-        <Col md={4}>
-          <Card className="shadow-sm text-center p-3">
-            <FaProjectDiagram size={40} className="text-success" />
-            <h4 className="mt-3">Total Projects</h4>
-            <p className="fs-4 fw-bold">{projects.length}</p>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="shadow-sm text-center p-3">
-            <FaTasks size={40} className="text-warning" />
-            <h4 className="mt-3">Total Tasks</h4>
-            <p className="fs-4 fw-bold"> {/* Get this from state when backend is connected */} 45 </p>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="shadow-sm text-center p-3">
-            <FaUsers size={40} className="text-info" />
-            <h4 className="mt-3">Total Teams</h4>
-            <p className="fs-4 fw-bold">5</p>
-          </Card>
-        </Col>
-      </Row>
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">Dashboard</h1>
 
-      <Row className="mt-5 text-center">
-        <Col>
-          <Button variant="primary" className="me-2">
-            <FaPlus /> Add Project
-          </Button>
-          <Button variant="secondary">
-            <FaPlus /> Assign Task
-          </Button>
-        </Col>
-      </Row>
-    </Container>
+      {/* Overview Section */}
+      <div className="dashboard-overview">
+        <div className="stat-card">
+          <h3>Projects</h3>
+          <p>10 Active</p>
+        </div>
+        <div className="stat-card">
+          <h3>Tasks</h3>
+          <p>24 Pending</p>
+        </div>
+        <div className="stat-card">
+          <h3>Team Members</h3>
+          <p>8 Active</p>
+        </div>
+      </div>
+
+      {/* Recent Activity Section */}
+      <div className="recent-activity">
+        <h2>Recent Activity</h2>
+        <ul>
+          <li>✅ Task "Design UI" completed</li>
+          <li>🆕 New project "Marketing Campaign" added</li>
+          <li>🔧 Task "Bug Fixes" updated</li>
+        </ul>
+      </div>
+    </div>
   );
 }

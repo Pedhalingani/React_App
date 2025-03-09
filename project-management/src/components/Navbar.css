@@ -1,0 +1,49 @@
+.navbar {
+    width: calc(100% - 250px);
+    height: 60px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Adjust when sidebar is collapsed */
+  .navbar.collapsed {
+    width: calc(100% - 60px);
+    left: 60px;
+  }
+  
+  /* Dark mode styles */
+  .navbar.dark {
+    background: #212529;
+    color: white;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  /* Theme Toggle Button */
+  .theme-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .theme-toggle:hover {
+    color: #007bff;
+  }
+  
+  /* Responsive for Mobile */
+  @media (max-width: 768px) {
+    .navbar {
+      width: 100%;
+      left: 0;
+    }
+  }
+  

@@ -1,30 +1,41 @@
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
+import Projects from "./pages/Projects";
+import Tasks from "./pages/Tasks";
+import Teams from "./pages/Teams";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import FileUpload from "./components/FileUpload";
+import Navbar from "./components/Navbar";
+import Logout from "./pages/Logout";
+import PrivateRoute from "./components/PrivateRoute"; // ✅ Import PrivateRoute
 
-const socket = io("http://localhost:5173"); // ✅ Fixed URL (No extra `http:` line)
+import "./App.css"; // ✅ Keep CSS import at the end
 
-function App() {
-  const [notifications, setNotifications] = useState([]);
-
-  useEffect(() => {
-    socket.on("project-updated", (message) => {
-      setNotifications((prev) => [...prev, message]);
-    });
-
-    return () => {
-      socket.off("project-updated"); // Cleanup listener
-    };
-  }, []);
-
+export default function App() {
   return (
-    <div>
-      {notifications.map((note, index) => (
-        <p key={index} className="alert alert-info">{note}</p>
-      ))}
-    </div>
+    <Router>
+      <div className="app-container">
+        <Sidebar />
+        <div className="main-content">
+          <Navbar /> {/* ✅ Ensure Navbar is always visible */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+
+            {/* ✅ Protect routes using PrivateRoute */}
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/teams" element={<Teams />} />
+              <Route path="/file-upload" element={<FileUpload />} />
+              <Route path="/logout" element={<Logout />} />
+            </Route>
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
-
-export default App;

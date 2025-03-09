@@ -1,18 +1,35 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import "../styles/Home.css"; // Ensure CSS is linked
 
 export default function Home() {
   return (
-    <div className="h-screen flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4">
-      <h1 className="text-4xl font-bold">Welcome to the Project Management Tool</h1>
-      <p className="mt-4 text-lg">Manage your projects efficiently!</p>
-      <Link
-        to="/dashboard"
-        className="mt-6 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition"
-      >
-        Get Started
-      </Link>
+    <div className="home-container">
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div className="hero-content">
+          <h1>Project Management Tool</h1>
+          <p>Plan, Track, and Collaborate on Your Projects with Ease.</p>
+
+          {/* Enhanced Call to Action Button */}
+          <a href="/dashboard" className="cta-button">Get Started</a>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="features">
+        <div className="feature-card">
+          <h3>📁 Manage Projects</h3>
+          <p>Create and organize your projects effortlessly.</p>
+        </div>
+        <div className="feature-card">
+          <h3>📋 Track Tasks</h3>
+          <p>Assign and monitor tasks for better productivity.</p>
+        </div>
+        <div className="feature-card">
+          <h3>🤝 Collaborate</h3>
+          <p>Work with your team and achieve goals faster.</p>
+        </div>
+      </div>
     </div>
   );
 }
-
-  
